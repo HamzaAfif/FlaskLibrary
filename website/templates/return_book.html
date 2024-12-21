@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h2>Return Book</h2>
+
+  <p>Are you sure you want to return this book?</p>
+
+  <form action="{{ url_for('auth.return_book', loan_id=loan_id) }}" method="post">
+    <button type="submit" class="btn btn-primary">Confirm Return</button>
+    <a href="{{ url_for('auth.home') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

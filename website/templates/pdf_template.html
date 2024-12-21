@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservation Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .reservation-info {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reservation-info">
+        <h1>Reservation Receipt</h1>
+        <p>Reservation Information:</p>
+        <ul>
+            {% for reservation in reservation_info %}
+                <li><strong>Reservation ID:</strong> {{ reservation[0] }}</li>
+                <li><strong>Book ID:</strong> {{ reservation[1] }}</li>
+                <li><strong>Person ID:</strong> {{ reservation[2] }}</li>
+                <li><strong>Period:</strong> {{ reservation[3] }}</li>
+                <li><strong>Date de début:</strong> {{ reservation[4] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

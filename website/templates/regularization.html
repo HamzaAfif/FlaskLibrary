@@ -1,0 +1,22 @@
+<!-- regularization.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Demande de Régularisation au nom du Chef de l’Établissement</h2>
+  <form action="{{ url_for('auth.submit_regularization') }}" method="POST">
+    <div class="form-group">
+      <label for="motif1">Les motifs du problème:</label>
+      <textarea class="form-control" id="motif1" name="motif1" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="motif2">Les motifs du problème (suite):</label>
+      <textarea class="form-control" id="motif2" name="motif2" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="motif3">Les motifs du problème (suite):</label>
+      <textarea class="form-control" id="motif3" name="motif3" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}

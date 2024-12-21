@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h2 class="text-center">Welcome, {{ user }}!</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h3 class="card-title">Current Demands:</h3>
+          <table class="table demand-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Book Title</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for demand in demands %}
+              <tr>
+                <td>{{ demand[0] }}</td>
+                <td>{{ demand[1] }}</td>
+                <td>Pending</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h3 class="card-title">Active Book Loans:</h3>
+          <table class="table loan-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Book Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Period</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for loan in loans %}
+              <tr>
+                <td>{{ loan[0] }}</td>
+                <td>{{ loan[1] }}</td>
+                <td>{{ loan[2] }}</td>
+                <td>{{ loan[3] }}</td>
+                <td>{{ loan[4] }}</td>
+                <td>{{ loan[5] }}</td>
+                <td>
+                  {% if loan[5] == "approved" and loan[6] is none %}
+                  <form action="{{ url_for('auth.return_book', loan_id=loan[0]) }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="loan_id" value="{{ loan[0] }}">
+                    <button type="submit" class="btn btn-sm btn-primary">Return Book</button>
+                  </form>
+                  {% else %}
+                  Returned
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mt-4">Available Documents:</h3>
+  <table class="table document-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>ISBN</th>
+        <th>Author</th>
+        <th>Place</th>
+        <th>Release Year</th>
+        <th>Number of Copies</th>
+        <th>Empruntable</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for document in documents %}
+      <tr>
+        <td>{{ document[1] }}</td>
+        <td>{{ document[2] }}</td>
+        <td>{{ document[3] }}</td>
+        <td>{{ document[5] }}</td>
+        <td>{{ document[4] }}</td>
+        <td>{{ document[6] }}</td>
+        <td>{{ document[7] }}</td>
+        <td>{{ document[8] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="text-center mt-4">
+    <a href="{{ url_for('auth.reservations') }}" class="btn btn-primary reservation-btn">Make a Demand</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Add Document{% endblock %}
+{% block content %}
+<form method="POST">
+  <h3 align="center">Add Document</h3>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="title"
+      placeholder="Enter title"
+    />
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select class="form-control" id="type" name="type">
+      <option value="CD">CD</option>
+      <option value="Thèses">Thèses</option>
+      <option value="Article">Article</option>
+      <option value="Livres">Livres</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="isbn">ISBN</label>
+    <input
+      type="text"
+      class="form-control"
+      id="isbn"
+      name="isbn"
+      placeholder="Enter ISBN"
+    />
+  </div>
+  <div class="form-group">
+    <label for="place">Place</label>
+    <input
+      type="text"
+      class="form-control"
+      id="place"
+      name="place"
+      placeholder="Enter place"
+    />
+  </div>
+  <div class="form-group">
+    <label for="author">Author</label>
+    <input
+      type="text"
+      class="form-control"
+      id="author"
+      name="author"
+      placeholder="Enter author"
+    />
+  </div>
+  <div class="form-group">
+    <label for="releaseYear">Release Year</label>
+    <input
+      type="text"
+      class="form-control"
+      id="releaseYear"
+      name="releaseYear"
+      placeholder="Enter release year"
+    />
+  </div>
+  <div class="form-group">
+    <label for="numCopies">Number of Copies</label>
+    <input
+      type="text"
+      class="form-control"
+      id="numCopies"
+      name="numCopies"
+      placeholder="Enter number of copies"
+    />
+  </div>
+  <div class="form-group">
+    <label for="borrowable">Borrowable</label>
+    <select class="form-control" id="borrowable" name="borrowable">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </select>
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Commande{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+  <div class="col-md-6 offset-md-3">
+    <h1>Commande</h1>
+    <form action="{{ url_for('auth.commande') }}" method="POST">
+      <div class="form-group">
+        <label for="fournisseur">Fournisseur:</label>
+        <input type="text" class="form-control" name="fournisseur" id="fournisseur" required>
+      </div>
+      <div id="productFields">
+        <div class="form-group">
+          <label for="product1">Product:</label>
+          <input type="text" class="form-control" name="product1" id="product1" required>
+          <label for="price1">Price:</label>
+          <input type="number" class="form-control" name="price1" id="price1" required>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" id="addProduct">Add Product</button>
+      <button type="submit" class="btn btn-success">Make Commande</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var counter = 1;
+
+    document.getElementById('addProduct').addEventListener('click', function() {
+      var productField = document.createElement('div');
+      productField.className = 'form-group';
+
+      var productLabel = document.createElement('label');
+      productLabel.htmlFor = 'product' + counter;
+      productLabel.textContent = 'Product:';
+
+      var productInput = document.createElement('input');
+      productInput.type = 'text';
+      productInput.className = 'form-control';
+      productInput.name = 'product' + counter;
+      productInput.id = 'product' + counter;
+      productInput.required = true;
+
+      var priceLabel = document.createElement('label');
+      priceLabel.htmlFor = 'price' + counter;
+      priceLabel.textContent = 'Price:';
+
+      var priceInput = document.createElement('input');
+      priceInput.type = 'number';
+      priceInput.className = 'form-control';
+      priceInput.name = 'price' + counter;
+      priceInput.id = 'price' + counter;
+      priceInput.required = true;
+
+      productField.appendChild(productLabel);
+      productField.appendChild(productInput);
+      productField.appendChild(priceLabel);
+      productField.appendChild(priceInput);
+
+      document.getElementById('productFields').appendChild(productField);
+      counter++;
+    });
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+      var totalPrices = document.querySelectorAll('input[name^="price"]');
+      var totalPrice = 0;
+      for (var i = 0; i < totalPrices.length; i++) {
+        if (totalPrices[i].value !== '') {
+          totalPrice += parseFloat(totalPrices[i].value);
+        }
+      }
+      var totalPriceInput = document.createElement('input');
+      totalPriceInput.type = 'hidden';
+      totalPriceInput.name = 'prix_totale';
+      totalPriceInput.value = totalPrice.toFixed(2);
+      this.appendChild(totalPriceInput);
+    });
+  });
+</script>
+{% endblock %}
+
+

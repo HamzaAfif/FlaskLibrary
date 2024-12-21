@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+
+{% block title %}Book Reservation{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2>Book Reservation</h2>
+    <form action="{{ url_for('auth.reservations') }}" method="POST">
+      <div class="form-group">
+        <label for="book-title">Book Title:</label>
+        <input type="text" id="book-title" name="book-title" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="Nom">Nom :</label>
+        <input type="text" id="Nom" name="Nom" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="duration">Reservation Duration:</label>
+        <select id="duration" name="duration" class="form-control" required>
+          <option value="short">Short</option>
+          <option value="long">Long</option>
+          <option value="annual">Annual</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="return_date">Return Date:</label>
+        <input type="text" id="return_date" name="return_date" class="form-control" readonly>
+      </div>
+      <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+    </form>
+  </div>
+
+  <script>
+    var durationSelect = document.getElementById("duration");
+    var returnDateInput = document.getElementById("return_date");
+
+    durationSelect.addEventListener("change", function() {
+      var selectedDuration = durationSelect.value;
+      var currentDate = new Date();
+      var returnDate = new Date();
+
+      if (selectedDuration === "short") {
+        returnDate.setDate(currentDate.getDate() + 15);
+      } else if (selectedDuration === "long") {
+        returnDate.setDate(currentDate.getDate() + 30);
+      } else if (selectedDuration === "annual") {
+        returnDate.setFullYear(currentDate.getFullYear() + 1, 11, 31);
+      }
+
+      var formattedReturnDate = returnDate.toISOString().split("T")[0];
+      returnDateInput.value = formattedReturnDate;
+    });
+  </script>
+{% endblock %}

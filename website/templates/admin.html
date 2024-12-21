@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Inscriptions</h2>
+  <table class="table inscription-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Role</th>
+        <th>Score</th>
+        <th></th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inscription in inscriptions %}
+      <tr>
+        <td>{{ inscription[0] }}</td>
+        <td>{{ inscription[1] }}</td>
+        <td>{{ inscription[2] }}</td>
+        <td>{{ inscription[3] }}</td>
+        <td>{{ inscription[5] }}</td>
+        <td>
+          <form action="{{ url_for('auth.update_score', person_id=inscription[0]) }}" method="POST" style="display:inline;">
+            <input type="number" name="score" value="{{ inscription[6] }}" min="0">
+            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ url_for('auth.delete_person', person_id=inscription[0]) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ url_for('auth.changepassword', person_id=inscription[0]) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-primary">Change Password</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('auth.sign_up') }}" class="btn btn-sm btn-primary">Add Person</a>
+
+  <h2>Les livres</h2>
+  <table class="table document-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>ISBN</th>
+        <th>Author</th>
+        <th>Place</th>
+        <th>Release Year</th>
+        <th>Number of Copies</th>
+        <th>Empruntable</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for document in documents %}
+      <tr>
+        <td>{{ document[1] }}</td>
+        <td>{{ document[2] }}</td>
+        <td>{{ document[3] }}</td>
+        <td>{{ document[5] }}</td>
+        <td>{{ document[4] }}</td>
+        <td>{{ document[6] }}</td>
+        <td>{{ document[7] }}</td>
+        <td>{{ document[8] }}</td>
+        <td>
+          <form action="{{ url_for('auth.delete_document') }}" method="POST" style="display:inline;">
+            <input type="hidden" name="titre" value="{{ document[0] }}">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('auth.ajout') }}" class="btn btn-sm btn-primary">Add Document</a>
+
+  <h2>Demande de Réservations</h2>
+  <table class="table reservation-table">
+    <thead>
+      <tr>
+        <th>Demande ID</th>
+        <th>Livre ID</th>
+        <th>Person ID</th>
+        <th>Period</th>
+        <th>Date de début</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation[0] }}</td>
+        <td>{{ reservation[1] }}</td>
+        <td>{{ reservation[2] }}</td>
+        <td>{{ reservation[3] }}</td>
+        <td>{{ reservation[4] }}</td>
+        <td>
+          <form action="{{ url_for('auth.approved') }}" method="POST" style="display:inline;">
+            <input type="hidden" name="demande_id" value="{{ reservation[0] }}">
+            <button type="submit" class="btn btn-sm btn-success">Approved</button>
+          </form>
+          <form action="{{ url_for('auth.approved') }}" method="POST" style="display:inline;">
+            <input type="hidden" name="demande_id1" value="{{ reservation[0] }}">
+            <button type="submit" class="btn btn-sm btn-danger">Not Approved</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Regularization Requests</h2>
+  <table class="table regularization-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Regularization Request</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inscription in inscriptions %}
+      <tr>
+        <td>{{ inscription[0] }}</td>
+        <td>{{ inscription[3] }}</td>
+        <td>
+          {% if inscription[7] %}
+          {{ inscription[7] }}
+          {% else %}
+          No regularization request
+          {% endif %}
+        </td>
+        <td>
+          <form action="{{ url_for('auth.delete_regularization', inscription_id=inscription[0]) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ url_for('auth.commande') }}" class="btn btn-sm btn-primary">Make a Command</a>
+</div>
+{% endblock %}
+
